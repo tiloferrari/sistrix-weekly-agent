@@ -34,8 +34,10 @@ sistrix_agent/
   report.py     PDF-Bericht (reportlab, Deutsch)
   agent.py      Orchestrierung: Profile sammeln → analysieren
   __main__.py   CLI
-workflow/
-  sistrix_weekly_workflow.py   Mistral Workflow (Connector `sistrix_e5d7`), lauffähig in AI Studio
+apps/worker/src/worker/workflows/
+  sistrix_weekly.py            Mistral Workflow (Connector `sistrix_e5d7`), Worker für AI Studio
+apps/worker/                   Worker-Projekt (pyproject + uv.lock)
+deploy/docker/Dockerfile.worker  Dockerfile für das Managed Deployment (Build-Kontext: Repo-Root)
 data/
   live_capture.json            aufgezeichnete Live-Abfrage vom 16.11.2026 (Replay/Test)
 tests/                         pytest-Suite
@@ -60,9 +62,10 @@ python -m sistrix_agent --client rest --output reports/bericht.pdf
 
 ### In Mistral AI Studio (empfohlen, „Sistrix Connector“)
 
-Der Workflow in `workflow/sistrix_weekly_workflow.py` deklariert den Connector `sistrix_e5d7`
-(`connector("sistrix_e5d7")` + `@uses_connectors`) und ruft die Tools `domain` und
-`keyword_domain_seo` darüber auf. Nach dem Deployment (GitHub-Repo → Managed Deployment):
+Der Workflow in `apps/worker/src/worker/workflows/sistrix_weekly.py` deklariert den Connector
+`sistrix_e5d7` (`connector("sistrix_e5d7")` + `@uses_connectors`) und ruft die Tools `domain` und
+`keyword_domain_seo` darüber auf. Managed Deployment aus diesem Repo (Build-Kontext: Repo-Root,
+Dockerfile: `deploy/docker/Dockerfile.worker`), dann:
 
 **Wöchentlicher Zeitplan** (z. B. montags 08:00 Europe/Berlin = `0 7 * * 1` UTC im Winter):
 
