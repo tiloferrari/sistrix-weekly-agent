@@ -3,10 +3,6 @@ from datetime import date
 
 import pydantic
 import mistralai.workflows as workflows
-from mistralai.workflows import Depends
-from mistralai.workflows.plugins.mistralai.connectors import ToolCallClient, connector, uses_connectors
-
-sistrix_connector = connector("sistrix_e5d7")
 
 
 class WeeklySeoInput(pydantic.BaseModel):
@@ -18,14 +14,11 @@ class WeeklySeoInput(pydantic.BaseModel):
 
 
 @workflows.activity(name="sistrix-weekly-analysis")
-async def sistrix_weekly_analysis(
-    payload: WeeklySeoInput,
-    sistrix: ToolCallClient = Depends(sistrix_connector),
-) -> dict:
+async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
     from mistralai.client import Mistral
 
     from sistrix_agent.agent import run_weekly_analysis
-    from sistrix_agent.client import ConnectorSistrixClient
+    from sistrix_agent.client import RestSistrixClient
     from sistrix_agent.config import Config
     from sistrix_agent.report import build_pdf
 
@@ -35,7 +28,7 @@ async def sistrix_weekly_analysis(
         top_competitors=payload.top_competitors,
         keywords_per_competitor=payload.keywords_per_competitor,
     )
-    client = ConnectorSistrixClient(sistrix)
+    client = RestSistrixClient()
     result = await run_weekly_analysis(client, cfg)
 
     filename = f"sistrix-weekly-report-{date.today().isoformat()}.pdf"
@@ -80,7 +73,6 @@ async def sistrix_weekly_analysis(
 
 
 @workflows.workflow.define(name="sistrix-weekly-seo-report")
-@uses_connectors(sistrix_connector)
 class SistrixWeeklySeoReport:
     @workflows.workflow.entrypoint
     async def run(self, payload: WeeklySeoInput) -> dict:

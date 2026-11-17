@@ -60,12 +60,18 @@ export SISTRIX_API_KEY=...   # nie im Code/Repo einchecken
 python -m sistrix_agent --client rest --output reports/bericht.pdf
 ```
 
-### In Mistral AI Studio (empfohlen, „Sistrix Connector“)
+### In Mistral AI Studio (Managed Deployment)
 
-Der Workflow in `apps/worker/src/worker/workflows/sistrix_weekly.py` deklariert den Connector
-`sistrix_e5d7` (`connector("sistrix_e5d7")` + `@uses_connectors`) und ruft die Tools `domain` und
-`keyword_domain_seo` darüber auf. Managed Deployment aus diesem Repo (Build-Kontext: Repo-Root,
-Dockerfile: `deploy/docker/Dockerfile.worker`), dann:
+Der Workflow in `apps/worker/src/worker/workflows/sistrix_weekly.py` ruft die Sistrix-API direkt
+per REST (`keyword.domain.seo`, `domain.competitors.seo`, `domain.visibilityindex`,
+`domain.kwcount.seo[.top10]`) mit dem API-Key aus dem Workspace-Secret `sistrix_api_key`
+(Env `SISTRIX_API_KEY`) auf. Grund: Der persönliche Sistrix-Connector (`sistrix_e5d7`,
+`owner_type=user`, `visibility=private`) ist für das Deployment-Service-Account nicht sichtbar –
+geplante Läufe brauchen ohnehin ein Workspace-Secret. Interaktiv in Studio kann die Analyse
+weiterhin über den Sistrix-Connector laufen (siehe `ConnectorSistrixClient`).
+
+Managed Deployment aus diesem Repo (Build-Kontext: Repo-Root, Dockerfile:
+`deploy/docker/Dockerfile.worker`), Secret-Binding `sistrix_api_key` → `SISTRIX_API_KEY`, dann:
 
 **Wöchentlicher Zeitplan** (z. B. montags 08:00 Europe/Berlin = `0 7 * * 1` UTC im Winter):
 
@@ -89,11 +95,11 @@ oder per MCP: `mistral_mcp_create_workflow_schedule` mit `workflow_name="sistrix
 
 Der Lauf lädt den PDF-Bericht zusätzlich als Mistral-Datei hoch (`pdf_file_id` im Ergebnis).
 
-> **Wichtig für geplante Läufe:** Ein Schedule läuft als Deployment-Service-Account und kann
-> nur **Workspace-/Organisations-Credentials** des Connectors nutzen. Der Sistrix-Connector
-> hat aktuell nur ein User-Credential (`default`). Für den unattended Wochenlauf bitte in
-> Studio ein Workspace-Credential für `sistrix_e5d7` hinterlegen (oder alternativ den
-> Sistrix-API-Key als Workspace-Secret `SISTRIX_API_KEY` binden und den REST-Client nutzen).
+> **Wichtig für geplante Läufe:** Ein Schedule läuft als Deployment-Service-Account. Der
+> Sistrix-Connector `sistrix_e5d7` ist eine private User-Verbindung und für das Deployment
+> nicht sichtbar (404 „Connector not found“). Deshalb nutzt der Workflow die REST-API mit dem
+> **Workspace-Secret `sistrix_api_key`** (in Studio anlegen: Workspace → Secrets), das beim
+> Deployment als Env `SISTRIX_API_KEY` gebunden wird.
 
 ### Alternativ: Cron auf eigenem Server
 

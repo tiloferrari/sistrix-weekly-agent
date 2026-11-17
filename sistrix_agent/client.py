@@ -173,33 +173,46 @@ class RestSistrixClient:
         self._session = requests.Session()
 
     def _get(self, endpoint: str, params: dict[str, Any]) -> Any:
-        query = {"key": self._api_key, **params}
+        query = {"key": self._api_key, "api_key": self._api_key, **params}
         response = self._session.get(f"{self.BASE_URL}/{endpoint}", params=query, timeout=self._timeout)
         response.raise_for_status()
         payload = response.json()
         return payload.get("answer", payload)
 
-    async def competitors(self, domain: str, country: str, limit: int) -> list[str]:
-        data = self._get("domain.competitors", {"domain": domain, "country": country, "limit": limit})
-        return [str(d["domain"]) for d in data.get("data", [])]
+    @staticmethod
+    def _rows(payload: Any) -> list[dict[str, Any]]:
+        if isinstance(payload, dict):
+            return payload.get("data", []) or []
+        if isinstance(payload, list):
+            return payload
+        return []
 
-    async def _visindex(self, domain: str, country: str) -> float | None:
-        data = self._get("domain.visindex", {"domain": domain, "country": country})
-        rows = data.get("data", [])
-        return float(rows[0]["value"]) if rows else None
+    @staticmethod
+    def _scalar(payload: Any) -> float | None:
+        rows = RestSistrixClient._rows(payload)
+        if rows and "value" in rows[0]:
+            return float(rows[0]["value"])
+        return None
+
+    async def competitors(self, domain: str, country: str, limit: int) -> list[str]:
+        payload = self._get(
+            "domain.competitors.seo", {"domain": domain, "country": country, "num": limit}
+        )
+        return [str(item["domain"]) for item in self._rows(payload)]
 
     async def visindex(self, domain: str, country: str) -> float | None:
-        return await self._visindex(domain, country)
+        payload = self._get("domain.visibilityindex", {"domain": domain, "country": country})
+        return self._scalar(payload)
 
     async def kwcount(self, domain: str, country: str) -> int | None:
-        data = self._get("domain.kwcount.seo", {"domain": domain, "country": country})
-        rows = data.get("data", [])
-        return int(rows[0]["value"]) if rows else None
+        payload = self._get("domain.kwcount.seo", {"domain": domain, "country": country})
+        value = self._scalar(payload)
+        return int(value) if value is not None else None
 
     async def kwcount_top10(self, domain: str, country: str) -> int | None:
-        data = self._get("domain.kwcount.seo.top10", {"domain": domain, "country": country})
-        rows = data.get("data", [])
-        return int(rows[0]["value"]) if rows else None
+        payload = self._get("domain.kwcount.seo.top10", {"domain": domain, "country": country})
+        value = self._scalar(payload)
+        return int(value) if value is not None else None
 
     async def domain_keywords(
         self,
@@ -216,16 +229,20 @@ class RestSistrixClient:
         rows: list[KeywordRank] = []
         offset = 0
         for _ in range(max_pages):
-            data = self._get(
-                "domain.organic.get",
-                {"domain": domain, "country": country, "num": page_size, "offset": offset},
+            payload = self._get(
+                "keyword.domain.seo",
+                {"domain": domain, "country": country, "limit": page_size, "offset": offset},
             )
-            keywords = data.get("data", [{}])[0].get("keywords", [])
+            data = self._rows(payload)
+            keywords = data[0].get("keywords", []) if data and isinstance(data[0], dict) else []
             if not keywords:
                 break
             for item in keywords:
+                keyword = item.get("kw") or item.get("keyword")
+                if not keyword:
+                    continue
                 rank = KeywordRank(
-                    keyword=str(item["keyword"]),
+                    keyword=str(keyword),
                     position=int(item["position"]),
                     url=str(item.get("url") or ""),
                 )
