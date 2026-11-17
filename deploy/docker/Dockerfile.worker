@@ -1,0 +1,12 @@
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+
+WORKDIR /app
+
+COPY apps/worker/pyproject.toml apps/worker/uv.lock ./
+RUN uv sync --frozen --no-install-project
+
+COPY . .
+
+ENV PYTHONPATH=/app:/app/apps/worker/src
+
+CMD ["uv", "run", "--no-sync", "python", "-m", "worker.entrypoints.worker"]
