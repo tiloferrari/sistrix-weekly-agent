@@ -173,7 +173,7 @@ class RestSistrixClient:
         self._session = requests.Session()
 
     def _get(self, endpoint: str, params: dict[str, Any]) -> Any:
-        query = {"key": self._api_key, "api_key": self._api_key, **params}
+        query = {"key": self._api_key, "api_key": self._api_key, "format": "json", **params}
         response = self._session.get(f"{self.BASE_URL}/{endpoint}", params=query, timeout=self._timeout)
         response.raise_for_status()
         payload = response.json()
