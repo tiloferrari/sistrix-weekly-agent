@@ -179,31 +179,49 @@ class RestSistrixClient:
         return response.json()
 
     @staticmethod
-    def _rows(payload: Any) -> list[dict[str, Any]]:
+    def _rows(payload: Any) -> list[Any]:
         if isinstance(payload, dict) and isinstance(payload.get("answer"), (dict, list)):
             payload = payload["answer"]
         if isinstance(payload, list):
-            return [item for item in payload if isinstance(item, dict)]
+            return payload
         if isinstance(payload, dict):
             if isinstance(payload.get("data"), list):
-                return [item for item in payload["data"] if isinstance(item, dict)]
+                return payload["data"]
             for value in payload.values():
-                if isinstance(value, list) and value and isinstance(value[0], dict):
+                if isinstance(value, list) and value:
                     return value
         return []
 
     @staticmethod
     def _scalar(payload: Any) -> float | None:
-        rows = RestSistrixClient._rows(payload)
-        if rows and "value" in rows[0]:
-            return float(rows[0]["value"])
+        for item in RestSistrixClient._rows(payload):
+            if isinstance(item, dict) and "value" in item:
+                return float(item["value"])
         return None
+
+    @staticmethod
+    def _normalize_domain(value: str) -> str:
+        value = value.strip().lower()
+        if "://" in value:
+            value = value.split("://", 1)[1]
+        value = value.split("/", 1)[0]
+        return value.removeprefix("www.")
 
     async def competitors(self, domain: str, country: str, limit: int) -> list[str]:
         payload = self._get(
             "domain.competitors.seo", {"domain": domain, "country": country, "num": limit}
         )
-        return [str(item["domain"]) for item in self._rows(payload)]
+        domains: list[str] = []
+        for item in self._rows(payload):
+            if isinstance(item, str):
+                domains.append(self._normalize_domain(item))
+            elif isinstance(item, dict):
+                for key in ("domain", "host", "url"):
+                    value = item.get(key)
+                    if isinstance(value, str) and value:
+                        domains.append(self._normalize_domain(value))
+                        break
+        return domains
 
     async def visindex(self, domain: str, country: str) -> float | None:
         payload = self._get("domain.visibilityindex", {"domain": domain, "country": country})
