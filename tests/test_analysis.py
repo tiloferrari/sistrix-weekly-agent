@@ -122,16 +122,16 @@ def test_select_top_competitors_ranks_by_danger_and_limits():
     assert reports[0].top_to_optimize[0].keyword == "interim management düsseldorf"
 
 
-def test_keyword_row_cap_per_domain():
-    cfg = Config(max_keywords_per_domain=3)
-    own = make_profile("deutscheinterim.com", [("interim a", 1), ("interim b", 2), ("interim c", 3), ("interim d", 4)])
-    comp = make_profile("interim-profis.com", [("interim a", 1)], top_keywords=["interim a"])
+def test_keyword_row_cap_applies_to_competitors_not_own():
     import asyncio as _asyncio
+
+    cfg = Config(max_keywords_per_domain=2)
+    seen: dict[str, int] = {}
 
     class CapClient(StaticSistrixClient):
         async def domain_keywords(self, domain, country, to_pos, regex_keyword=None, page_size=1000, max_pages=10):
             rows = await super().domain_keywords(domain, country, to_pos, regex_keyword, page_size, max_pages)
-            assert len(rows) <= 3, "row cap not applied"
+            seen[domain] = len(rows)
             return rows
 
     capture = {
@@ -147,13 +147,14 @@ def test_keyword_row_cap_per_domain():
                 "visindex": 0.2,
                 "kwcount_top10": 10,
                 "top_keywords": ["interim a"],
-                "keywords": [{"keyword": "interim a", "position": 1}],
+                "keywords": [{"keyword": "interim a", "position": 1}, {"keyword": "interim b", "position": 2}, {"keyword": "interim c", "position": 3}],
             }
         ],
         "assume_unranked_if_not_fetched": False,
     }
     result = _asyncio.run(run_weekly_analysis(CapClient(capture), cfg))
-    assert len(result.own.keywords) <= 3
+    assert seen["deutscheinterim.com"] == 4
+    assert len(result.competitors[0].profile.keywords) <= 2
 
 
 def test_run_weekly_analysis_on_live_capture():
