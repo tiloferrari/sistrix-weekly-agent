@@ -176,15 +176,20 @@ class RestSistrixClient:
         query = {"key": self._api_key, "api_key": self._api_key, "format": "json", **params}
         response = self._session.get(f"{self.BASE_URL}/{endpoint}", params=query, timeout=self._timeout)
         response.raise_for_status()
-        payload = response.json()
-        return payload.get("answer", payload)
+        return response.json()
 
     @staticmethod
     def _rows(payload: Any) -> list[dict[str, Any]]:
-        if isinstance(payload, dict):
-            return payload.get("data", []) or []
+        if isinstance(payload, dict) and isinstance(payload.get("answer"), (dict, list)):
+            payload = payload["answer"]
         if isinstance(payload, list):
-            return payload
+            return [item for item in payload if isinstance(item, dict)]
+        if isinstance(payload, dict):
+            if isinstance(payload.get("data"), list):
+                return [item for item in payload["data"] if isinstance(item, dict)]
+            for value in payload.values():
+                if isinstance(value, list) and value and isinstance(value[0], dict):
+                    return value
         return []
 
     @staticmethod
@@ -229,12 +234,22 @@ class RestSistrixClient:
         rows: list[KeywordRank] = []
         offset = 0
         for _ in range(max_pages):
-            payload = self._get(
-                "keyword.domain.seo",
-                {"domain": domain, "country": country, "limit": page_size, "offset": offset},
-            )
-            data = self._rows(payload)
-            keywords = data[0].get("keywords", []) if data and isinstance(data[0], dict) else []
+            params: dict[str, Any] = {
+                "domain": domain,
+                "country": country,
+                "limit": page_size,
+                "offset": offset,
+                "to_pos": to_pos,
+            }
+            if regex_keyword:
+                params["regex_keyword"] = regex_keyword
+            payload = self._get("keyword.domain.seo", params)
+            keywords: list[dict[str, Any]] = []
+            for item in self._rows(payload):
+                if isinstance(item.get("keywords"), list):
+                    keywords.extend(k for k in item["keywords"] if isinstance(k, dict))
+                elif "kw" in item or "keyword" in item:
+                    keywords.append(item)
             if not keywords:
                 break
             for item in keywords:
