@@ -176,7 +176,12 @@ class RestSistrixClient:
         query = {"key": self._api_key, "api_key": self._api_key, "format": "json", **params}
         response = self._session.get(f"{self.BASE_URL}/{endpoint}", params=query, timeout=self._timeout)
         response.raise_for_status()
-        return response.json()
+        payload = response.json()
+        if isinstance(payload, dict):
+            error = payload.get("error") or (payload.get("answer") or {}).get("error") if isinstance(payload.get("answer"), dict) else payload.get("error")
+            if error:
+                raise RuntimeError(f"Sistrix API error on {endpoint}: {error}")
+        return payload
 
     @staticmethod
     def _rows(payload: Any) -> list[Any]:
