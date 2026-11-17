@@ -12,6 +12,7 @@ class Config:
     top_competitors: int = 3
     keywords_per_competitor: int = 5
     max_pos: int = 100
+    max_keywords_per_domain: int = 100
     page_size: int = 1000
     max_pages: int = 10
     competitor_list_limit: int = 30
@@ -48,4 +49,7 @@ class Config:
                 os.environ.get("SISTRIX_KEYWORDS_PER_COMPETITOR", cls.keywords_per_competitor)
             ),
             max_pos=int(os.environ.get("SISTRIX_MAX_POS", cls.max_pos)),
+            max_keywords_per_domain=int(
+                os.environ.get("SISTRIX_MAX_KEYWORDS_PER_DOMAIN", cls.max_keywords_per_domain)
+            ),
         )

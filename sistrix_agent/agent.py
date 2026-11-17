@@ -13,14 +13,16 @@ async def collect_profile(client: SistrixClient, domain: str, cfg: Config, own: 
     kwcount = await client.kwcount(domain, cfg.country)
     kwcount_top10 = await client.kwcount_top10(domain, cfg.country)
     regex = None if own else cfg.branch_regex
+    row_cap = max(1, cfg.max_keywords_per_domain)
     keywords = await client.domain_keywords(
         domain,
         cfg.country,
         to_pos=cfg.max_pos,
         regex_keyword=regex,
-        page_size=cfg.page_size,
-        max_pages=cfg.max_pages,
+        page_size=min(cfg.page_size, row_cap),
+        max_pages=1 if row_cap < cfg.page_size else cfg.max_pages,
     )
+    keywords = keywords[:row_cap]
     keywords.sort(key=lambda k: (k.position, k.keyword))
     top_keywords = [k.keyword for k in keywords if k.position <= 10][:12]
     return DomainProfile(

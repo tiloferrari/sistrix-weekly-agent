@@ -10,6 +10,7 @@ class WeeklySeoInput(pydantic.BaseModel):
     country: str = "de"
     top_competitors: int = 3
     keywords_per_competitor: int = 5
+    max_keywords_per_domain: int = 100
 
 
 @workflows.activity(name="sistrix-weekly-analysis")
@@ -24,6 +25,7 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
         country=payload.country,
         top_competitors=payload.top_competitors,
         keywords_per_competitor=payload.keywords_per_competitor,
+        max_keywords_per_domain=payload.max_keywords_per_domain,
     )
     client = RestSistrixClient()
     result = await run_weekly_analysis(client, cfg)
