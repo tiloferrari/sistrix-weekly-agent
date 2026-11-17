@@ -128,6 +128,10 @@ python -m pytest tests/ -q
 | `SISTRIX_CANDIDATE_KEYWORD_PROBE` | `10` | günstige Top-10-Probe pro Kandidat zur Relevanz-Prüfung |
 | `SISTRIX_API_KEY` | – | nur für `--client rest` nötig |
 
+## Beispiel-Bericht (Live-Daten)
+
+Ein mit echten Sistrix-Live-Daten (16.11.2026) erzeugter PDF-Bericht liegt im Repo: [`docs/sample-report-live-2026-11-16.pdf`](docs/sample-report-live-2026-11-16.pdf) – 3 Seiten mit Top-3-Wettbewerbern, Begründung und Top-5-Keyword-Tabellen.
+
 ## Ergebnis des Probelaufs (16.11.2026)
 
  siehe `reports/` – Top-3-Wettbewerber laut Live-Daten: `interim-profis.com`, `interim-x.com`,
