@@ -4,8 +4,6 @@ import json
 import os
 from typing import Any, Protocol
 
-import requests
-
 from .models import KeywordRank
 
 
@@ -166,6 +164,8 @@ class RestSistrixClient:
     BASE_URL = "https://api.sistrix.com"
 
     def __init__(self, api_key: str | None = None, timeout: float = 60.0) -> None:
+        import requests
+
         self._api_key = api_key or os.environ.get("SISTRIX_API_KEY")
         if not self._api_key:
             raise ValueError("SISTRIX_API_KEY is not set")

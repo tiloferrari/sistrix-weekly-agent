@@ -1,17 +1,10 @@
-import base64
 import os
 from datetime import date
 
 import pydantic
 import mistralai.workflows as workflows
-from mistralai.client import Mistral
 from mistralai.workflows import Depends
 from mistralai.workflows.plugins.mistralai.connectors import ToolCallClient, connector, uses_connectors
-
-from sistrix_agent.agent import run_weekly_analysis
-from sistrix_agent.client import ConnectorSistrixClient
-from sistrix_agent.config import Config
-from sistrix_agent.report import build_pdf
 
 sistrix_connector = connector("sistrix_e5d7")
 
@@ -29,6 +22,13 @@ async def sistrix_weekly_analysis(
     payload: WeeklySeoInput,
     sistrix: ToolCallClient = Depends(sistrix_connector),
 ) -> dict:
+    from mistralai.client import Mistral
+
+    from sistrix_agent.agent import run_weekly_analysis
+    from sistrix_agent.client import ConnectorSistrixClient
+    from sistrix_agent.config import Config
+    from sistrix_agent.report import build_pdf
+
     cfg = Config(
         own_domain=payload.own_domain,
         country=payload.country,
