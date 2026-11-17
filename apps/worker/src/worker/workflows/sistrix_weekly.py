@@ -1,4 +1,4 @@
-import os
+import base64
 from datetime import date
 
 import pydantic
@@ -10,13 +10,10 @@ class WeeklySeoInput(pydantic.BaseModel):
     country: str = "de"
     top_competitors: int = 3
     keywords_per_competitor: int = 5
-    upload_file: bool = True
 
 
 @workflows.activity(name="sistrix-weekly-analysis")
 async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
-    from mistralai.client import Mistral
-
     from sistrix_agent.agent import run_weekly_analysis
     from sistrix_agent.client import RestSistrixClient
     from sistrix_agent.config import Config
@@ -34,17 +31,8 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
     filename = f"sistrix-weekly-report-{date.today().isoformat()}.pdf"
     pdf_path = f"/tmp/{filename}"
     build_pdf(result, pdf_path)
-
-    file_id = None
-    if payload.upload_file:
-        api_key = os.environ.get("MISTRAL_API_KEY")
-        async with Mistral(api_key=api_key) as mistral_client:
-            with open(pdf_path, "rb") as fh:
-                uploaded = await mistral_client.files.upload_async(
-                    file={"file_name": filename, "content": fh},
-                    purpose="ocr",
-                )
-            file_id = uploaded.id
+    with open(pdf_path, "rb") as fh:
+        pdf_base64 = base64.b64encode(fh.read()).decode("ascii")
 
     return {
         "report_date": date.today().isoformat(),
@@ -69,7 +57,7 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
             for c in result.competitors
         ],
         "pdf_file_name": filename,
-        "pdf_file_id": file_id,
+        "pdf_base64": pdf_base64,
     }
 
 
