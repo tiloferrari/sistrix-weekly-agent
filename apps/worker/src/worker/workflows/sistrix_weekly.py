@@ -41,7 +41,8 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
         async with Mistral(api_key=api_key) as mistral_client:
             with open(pdf_path, "rb") as fh:
                 uploaded = await mistral_client.files.upload_async(
-                    file={"file_name": filename, "content": fh}
+                    file={"file_name": filename, "content": fh},
+                    purpose="ocr",
                 )
             file_id = uploaded.id
 
