@@ -123,7 +123,9 @@ python -m pytest tests/ -q
 | `SISTRIX_TOP_COMPETITORS` | `3` | Anzahl Wettbewerber im Bericht |
 | `SISTRIX_KEYWORDS_PER_COMPETITOR` | `5` | Top-Keywords pro Wettbewerber |
 | `SISTRIX_MAX_POS` | `100` | bis zu welcher Position Keywords verglichen werden |
-| `SISTRIX_MAX_KEYWORDS_PER_DOMAIN` | `100` | max. Keyword-Zeilen pro Wettbewerber (1 Sistrix-Credit pro Zeile) |
+| `SISTRIX_MAX_KEYWORDS_PER_DOMAIN` | `100` | max. Keyword-Zeilen pro Domain (eigene + Wettbewerber; 1 Sistrix-Credit pro Zeile) |
+| `SISTRIX_COMPETITOR_LIST_LIMIT` | `15` | wie viele Kandidaten aus der Sistrix-Wettbewerberliste geprüft werden |
+| `SISTRIX_CANDIDATE_KEYWORD_PROBE` | `10` | günstige Top-10-Probe pro Kandidat zur Relevanz-Prüfung |
 | `SISTRIX_API_KEY` | – | nur für `--client rest` nötig |
 
 ## Ergebnis des Probelaufs (16.11.2026)

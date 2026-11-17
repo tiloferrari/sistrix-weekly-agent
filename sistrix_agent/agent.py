@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from .analysis import is_excluded, select_top_competitors
+from .analysis import build_competitor_report, danger_score, is_branch_relevant, is_excluded, lost_keywords
 from .client import SistrixClient
 from .config import Config
 from .models import AnalysisResult, DomainProfile
@@ -13,17 +13,16 @@ async def collect_profile(client: SistrixClient, domain: str, cfg: Config, own: 
     kwcount = await client.kwcount(domain, cfg.country)
     kwcount_top10 = await client.kwcount_top10(domain, cfg.country)
     regex = None if own else cfg.branch_regex
-    row_cap = max(1, cfg.max_keywords_per_domain) if not own else cfg.page_size * cfg.max_pages
+    row_cap = max(1, cfg.max_keywords_per_domain)
     keywords = await client.domain_keywords(
         domain,
         cfg.country,
         to_pos=cfg.max_pos,
         regex_keyword=regex,
         page_size=min(cfg.page_size, row_cap),
-        max_pages=1 if not own and row_cap < cfg.page_size else cfg.max_pages,
+        max_pages=1 if row_cap < cfg.page_size else cfg.max_pages,
     )
-    if not own:
-        keywords = keywords[:row_cap]
+    keywords = keywords[:row_cap]
     keywords.sort(key=lambda k: (k.position, k.keyword))
     top_keywords = [k.keyword for k in keywords if k.position <= 10][:12]
     return DomainProfile(
@@ -36,23 +35,53 @@ async def collect_profile(client: SistrixClient, domain: str, cfg: Config, own: 
     )
 
 
+async def probe_candidate(client: SistrixClient, domain: str, cfg: Config) -> DomainProfile:
+    visindex = await client.visindex(domain, cfg.country)
+    kwcount_top10 = await client.kwcount_top10(domain, cfg.country)
+    probe_rows = await client.domain_keywords(
+        domain,
+        cfg.country,
+        to_pos=10,
+        regex_keyword=cfg.branch_regex,
+        page_size=cfg.candidate_keyword_probe,
+        max_pages=1,
+    )
+    probe_rows.sort(key=lambda k: (k.position, k.keyword))
+    return DomainProfile(
+        domain=domain,
+        visindex=visindex,
+        kwcount_top10=kwcount_top10,
+        keywords=probe_rows,
+        top_keywords=[k.keyword for k in probe_rows][:12],
+    )
+
+
 async def run_weekly_analysis(client: SistrixClient, cfg: Config) -> AnalysisResult:
     own = await collect_profile(client, cfg.own_domain, cfg, own=True)
     candidate_domains = await client.competitors(cfg.own_domain, cfg.country, cfg.competitor_list_limit)
-    candidates: list[DomainProfile] = []
+    own_normalized = cfg.own_domain.lower().removeprefix("www.")
+    probes: list[DomainProfile] = []
     for domain in candidate_domains:
         normalized = domain.lower().removeprefix("www.")
-        if normalized == cfg.own_domain.lower().removeprefix("www."):
+        if normalized == own_normalized or is_excluded(domain, cfg):
             continue
-        if is_excluded(domain, cfg):
-            continue
-        candidates.append(await collect_profile(client, domain, cfg, own=False))
-    competitors = select_top_competitors(own, candidates, cfg)
+        probe = await probe_candidate(client, domain, cfg)
+        if is_branch_relevant(probe, cfg):
+            probes.append(probe)
+    scored = []
+    for probe in probes:
+        lost, overlap = lost_keywords(own, probe, cfg)
+        scored.append((danger_score(probe, own, lost, overlap), probe))
+    scored.sort(key=lambda pair: pair[0], reverse=True)
+    chosen = [probe for _, probe in scored[: cfg.top_competitors]]
+    full_profiles = [await collect_profile(client, p.domain, cfg, own=False) for p in chosen]
+    reports = [build_competitor_report(own, p, cfg) for p in full_profiles]
+    reports.sort(key=lambda r: danger_score(r.profile, own, r.lost, r.overlap), reverse=True)
     return AnalysisResult(
         company_name=cfg.company_name,
         own_domain=cfg.own_domain,
         country=cfg.country,
         generated_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
         own=own,
-        competitors=competitors,
+        competitors=reports[: cfg.top_competitors],
     )

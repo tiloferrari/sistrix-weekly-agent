@@ -15,7 +15,8 @@ class Config:
     max_keywords_per_domain: int = 100
     page_size: int = 1000
     max_pages: int = 10
-    competitor_list_limit: int = 30
+    competitor_list_limit: int = 15
+    candidate_keyword_probe: int = 10
     branch_regex: str = (
         r"(?i)(interim|personal|recruit|vermittl|headhunt|personaldienstl"
         r"|zeitarbeit|talent|besetzung|führungskraft|fachkraft|\bhr\b)"
