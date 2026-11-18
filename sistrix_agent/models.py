@@ -32,6 +32,7 @@ class LostKeyword:
     competitor_url: str
     gap: int | None
     score: float
+    search_volume: int | None = None
 
 
 @dataclass

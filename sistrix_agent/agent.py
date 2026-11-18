@@ -75,7 +75,12 @@ async def run_weekly_analysis(client: SistrixClient, cfg: Config) -> AnalysisRes
     scored.sort(key=lambda pair: pair[0], reverse=True)
     chosen = [probe for _, probe in scored[: cfg.top_competitors]]
     full_profiles = [await collect_profile(client, p.domain, cfg, own=False) for p in chosen]
-    reports = [build_competitor_report(own, p, cfg) for p in full_profiles]
+    reports = []
+    for profile in full_profiles:
+        base_lost, _ = lost_keywords(own, profile, cfg)
+        candidates = [item.keyword for item in base_lost[: cfg.search_volume_lookup_limit]]
+        volumes = await client.search_volumes(candidates, cfg.country) if candidates else {}
+        reports.append(build_competitor_report(own, profile, cfg, volumes=volumes))
     reports.sort(key=lambda r: danger_score(r.profile, own, r.lost, r.overlap), reverse=True)
     return AnalysisResult(
         company_name=cfg.company_name,

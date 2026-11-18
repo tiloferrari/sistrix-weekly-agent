@@ -19,7 +19,10 @@ Google-Ranking (Land: `de`) gegen wichtige Wettbewerber aus der Interim-/Persona
    Branchen-Keywords gefiltert). „Verloren“ = Wettbewerber rankt besser als wir (oder wir ranken
    für ein Top-10-Keyword des Wettbewerbers gar nicht in den Top 100).
 4. **Top-5-Keywords pro Wettbewerber** zur Content-Optimierung (Score = Positionsdifferenz ×
-   Gewicht der Wettbewerber-Position: Top 3 = 1.0, Top 10 = 0.6, Top 20 = 0.3, sonst 0.15).
+   Gewicht der Wettbewerber-Position (Top 3 = 1.0, Top 10 = 0.6, Top 20 = 0.3, sonst 0.15) ×
+   Suchvolumen-Faktor (1,0 / 1,15 / 1,3 / 1,6 / 2,0 ab 10 / 100 / 1.000 / 10.000 Suchanfragen
+   pro Monat). Das Suchvolumen wird pro Wettbewerber nur für die stärksten Kandidaten
+   nachgeladen (Sistrix Keyword-API `view=traffic`, gedeckelt via `search_volume_lookup_limit`).
 
 Der Bericht wird als PDF erzeugt (Titel, Ausgangslage, Wettbewerbs-Überblick, Methodik,
 pro Wettbewerber Profil + Begründung + Top-5-Tabelle mit URLs).
@@ -126,6 +129,7 @@ python -m pytest tests/ -q
 | `SISTRIX_MAX_KEYWORDS_PER_DOMAIN` | `100` | max. Keyword-Zeilen pro Domain (eigene + Wettbewerber; 1 Sistrix-Credit pro Zeile) |
 | `SISTRIX_COMPETITOR_LIST_LIMIT` | `15` | wie viele Kandidaten aus der Sistrix-Wettbewerberliste geprüft werden |
 | `SISTRIX_CANDIDATE_KEYWORD_PROBE` | `10` | günstige Top-10-Probe pro Kandidat zur Relevanz-Prüfung |
+| `SISTRIX_SEARCH_VOLUME_LOOKUP_LIMIT` | `25` | max. Suchvolumen-Abrufe pro Wettbewerber (1 Sistrix-Credit pro Keyword; `0` = deaktiviert) |
 | `SISTRIX_API_KEY` | – | nur für `--client rest` nötig |
 
 ## Beispiel-Bericht (Live-Daten)

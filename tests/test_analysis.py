@@ -12,6 +12,7 @@ from sistrix_agent.analysis import (
     is_excluded,
     lost_keywords,
     select_top_competitors,
+    volume_factor,
 )
 from sistrix_agent.client import StaticSistrixClient
 from sistrix_agent.config import Config
@@ -167,3 +168,94 @@ def test_run_weekly_analysis_on_live_capture():
         assert comp.lost
         for item in comp.top_to_optimize:
             assert item.competitor_position < (item.own_position or 999)
+    volumes_seen = [
+        i.search_volume
+        for c in result.competitors
+        for i in c.top_to_optimize
+        if i.search_volume is not None
+    ]
+    assert volumes_seen
+
+
+def test_volume_factor_tiers():
+    assert volume_factor(None) == 1.0
+    assert volume_factor(0) == 1.0
+    assert volume_factor(9) == 1.0
+    assert volume_factor(10) == 1.15
+    assert volume_factor(99) == 1.15
+    assert volume_factor(100) == 1.3
+    assert volume_factor(999) == 1.3
+    assert volume_factor(1000) == 1.6
+    assert volume_factor(9999) == 1.6
+    assert volume_factor(10000) == 2.0
+
+
+def test_search_volume_changes_lost_keyword_order():
+    cfg = Config()
+    own = make_profile(
+        "deutscheinterim.com",
+        [("interim manager berlin", 20), ("interim coo projekt", 20)],
+    )
+    comp = make_profile(
+        "interim-profis.com",
+        [("interim manager berlin", 10), ("interim coo projekt", 10)],
+    )
+    volumes = {"interim coo projekt": 8100, "interim manager berlin": 90}
+    lost_plain, _ = lost_keywords(own, comp, cfg)
+    lost_vol, _ = lost_keywords(own, comp, cfg, volumes=volumes)
+    assert {i.keyword for i in lost_plain} == {"interim manager berlin", "interim coo projekt"}
+    assert lost_plain[0].score == lost_plain[1].score
+    assert lost_vol[0].keyword == "interim coo projekt"
+    by_kw = {i.keyword: i for i in lost_vol}
+    assert by_kw["interim coo projekt"].search_volume == 8100
+    assert by_kw["interim manager berlin"].search_volume == 90
+    assert by_kw["interim coo projekt"].score > by_kw["interim manager berlin"].score
+
+
+def test_search_volume_lookup_is_capped_and_applied():
+    class RecordingClient(StaticSistrixClient):
+        def __init__(self, capture):
+            super().__init__(capture)
+            self.requested = []
+
+        async def search_volumes(self, keywords, country):
+            self.requested.extend(keywords)
+            return await super().search_volumes(keywords, country)
+
+    capture = {
+        "own": {
+            "domain": "deutscheinterim.com",
+            "visindex": 0.1,
+            "keywords": [
+                {"keyword": "interim a", "position": 5},
+                {"keyword": "interim b", "position": 6},
+                {"keyword": "interim c", "position": 7},
+                {"keyword": "interim d", "position": 8},
+            ],
+        },
+        "competitor_list": ["interim-profis.com"],
+        "competitor_candidates": [
+            {
+                "domain": "interim-profis.com",
+                "visindex": 0.2,
+                "kwcount_top10": 10,
+                "top_keywords": ["interim a"],
+                "keywords": [
+                    {"keyword": "interim a", "position": 1},
+                    {"keyword": "interim b", "position": 2},
+                    {"keyword": "interim c", "position": 3},
+                    {"keyword": "interim d", "position": 4},
+                    {"keyword": "interim e", "position": 1},
+                ],
+            }
+        ],
+        "search_volumes": {"interim a": 8100, "interim e": 40},
+        "assume_unranked_if_not_fetched": True,
+    }
+    cfg = Config(search_volume_lookup_limit=2)
+    client = RecordingClient(capture)
+    result = asyncio.run(run_weekly_analysis(client, cfg))
+    assert len(client.requested) <= 2
+    top = result.competitors[0].top_to_optimize
+    assert top[0].keyword == "interim a"
+    assert top[0].search_volume == 8100

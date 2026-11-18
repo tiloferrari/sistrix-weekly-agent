@@ -2,9 +2,31 @@ from __future__ import annotations
 
 import json
 import os
+from collections.abc import Iterable
 from typing import Any, Protocol
 
 from .models import KeywordRank
+
+_VOLUME_KEYS = ("searchvolume", "search_volume", "searchvolume_monthly", "searches", "volume", "traffic", "queries")
+
+
+def _find_volume(payload: Any) -> int | None:
+    if isinstance(payload, dict):
+        for key in _VOLUME_KEYS:
+            value = payload.get(key)
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                return int(value)
+        for value in payload.values():
+            if isinstance(value, (dict, list)):
+                found = _find_volume(value)
+                if found is not None:
+                    return found
+    elif isinstance(payload, list):
+        for item in payload:
+            found = _find_volume(item)
+            if found is not None:
+                return found
+    return None
 
 
 class SistrixClient(Protocol):
@@ -15,6 +37,8 @@ class SistrixClient(Protocol):
     async def kwcount(self, domain: str, country: str) -> int | None: ...
 
     async def kwcount_top10(self, domain: str, country: str) -> int | None: ...
+
+    async def search_volumes(self, keywords: Iterable[str], country: str) -> dict[str, int]: ...
 
     async def domain_keywords(
         self,
@@ -72,6 +96,15 @@ class ConnectorSistrixClient:
     async def kwcount_top10(self, domain: str, country: str) -> int | None:
         value = await self._metric(domain, country, "kwcount_top10", "kwcount.seo.top10")
         return int(value) if value is not None else None
+
+    async def search_volumes(self, keywords: Iterable[str], country: str) -> dict[str, int]:
+        volumes: dict[str, int] = {}
+        for keyword in keywords:
+            data = await self._call("keyword", {"keyword": keyword, "view": "traffic", "country": country})
+            volume = _find_volume(data)
+            if volume is not None:
+                volumes[keyword] = volume
+        return volumes
 
     async def domain_keywords(
         self,
@@ -137,6 +170,10 @@ class StaticSistrixClient:
     async def kwcount_top10(self, domain: str, country: str) -> int | None:
         value = self._profile(domain).get("kwcount_top10")
         return int(value) if value is not None else None
+
+    async def search_volumes(self, keywords: Iterable[str], country: str) -> dict[str, int]:
+        known = self._capture.get("search_volumes") or {}
+        return {kw: int(known[kw]) for kw in keywords if kw in known}
 
     async def domain_keywords(
         self,
@@ -241,6 +278,18 @@ class RestSistrixClient:
         payload = self._get("domain.kwcount.seo.top10", {"domain": domain, "country": country})
         value = self._scalar(payload)
         return int(value) if value is not None else None
+
+    async def search_volumes(self, keywords: Iterable[str], country: str) -> dict[str, int]:
+        volumes: dict[str, int] = {}
+        for keyword in keywords:
+            try:
+                payload = self._get("keyword", {"keyword": keyword, "country": country})
+            except RuntimeError:
+                continue
+            volume = _find_volume(payload)
+            if volume is not None:
+                volumes[keyword] = volume
+        return volumes
 
     async def domain_keywords(
         self,

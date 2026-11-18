@@ -49,15 +49,32 @@ def position_weight(position: int) -> float:
     return 0.15
 
 
+def volume_factor(volume: int | None) -> float:
+    if volume is None or volume < 10:
+        return 1.0
+    if volume < 100:
+        return 1.15
+    if volume < 1000:
+        return 1.3
+    if volume < 10000:
+        return 1.6
+    return 2.0
+
+
 def lost_keywords(
-    own: DomainProfile, competitor: DomainProfile, cfg: Config
+    own: DomainProfile,
+    competitor: DomainProfile,
+    cfg: Config,
+    volumes: dict[str, int] | None = None,
 ) -> tuple[list[LostKeyword], int]:
+    volumes = volumes or {}
     own_map = own.keyword_map()
     comp_map = competitor.keyword_map()
     lost: list[LostKeyword] = []
     overlap = 0
     for keyword, comp_rank in comp_map.items():
         own_rank = own_map.get(keyword)
+        volume = volumes.get(keyword)
         if own_rank is not None:
             overlap += 1
             if comp_rank.position < own_rank.position:
@@ -70,7 +87,8 @@ def lost_keywords(
                         own_url=own_rank.url,
                         competitor_url=comp_rank.url,
                         gap=gap,
-                        score=gap * position_weight(comp_rank.position),
+                        score=gap * position_weight(comp_rank.position) * volume_factor(volume),
+                        search_volume=volume,
                     )
                 )
         elif cfg.assume_unranked_if_not_fetched and comp_rank.position <= 10:
@@ -82,7 +100,8 @@ def lost_keywords(
                     own_url="",
                     competitor_url=comp_rank.url,
                     gap=None,
-                    score=5.0 * position_weight(comp_rank.position),
+                    score=5.0 * position_weight(comp_rank.position) * volume_factor(volume),
+                    search_volume=volume,
                 )
             )
     lost.sort(key=lambda item: item.score, reverse=True)
@@ -98,9 +117,12 @@ def danger_score(competitor: DomainProfile, own: DomainProfile, lost: list[LostK
 
 
 def build_competitor_report(
-    own: DomainProfile, competitor: DomainProfile, cfg: Config
+    own: DomainProfile,
+    competitor: DomainProfile,
+    cfg: Config,
+    volumes: dict[str, int] | None = None,
 ) -> CompetitorReport:
-    lost, overlap = lost_keywords(own, competitor, cfg)
+    lost, overlap = lost_keywords(own, competitor, cfg, volumes=volumes)
     business_type = classify_business(competitor, cfg)
     top = lost[: cfg.keywords_per_competitor]
 

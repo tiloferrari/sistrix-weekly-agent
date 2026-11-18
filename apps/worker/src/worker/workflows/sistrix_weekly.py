@@ -11,6 +11,7 @@ class WeeklySeoInput(pydantic.BaseModel):
     top_competitors: int = 3
     keywords_per_competitor: int = 5
     max_keywords_per_domain: int = 100
+    search_volume_lookup_limit: int = 25
 
 
 @workflows.activity(name="sistrix-weekly-analysis")
@@ -26,6 +27,7 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
         top_competitors=payload.top_competitors,
         keywords_per_competitor=payload.keywords_per_competitor,
         max_keywords_per_domain=payload.max_keywords_per_domain,
+        search_volume_lookup_limit=payload.search_volume_lookup_limit,
     )
     client = RestSistrixClient()
     result = await run_weekly_analysis(client, cfg)
@@ -52,6 +54,8 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
                         "keyword": k.keyword,
                         "own_position": k.own_position,
                         "competitor_position": k.competitor_position,
+                        "search_volume": k.search_volume,
+                        "score": k.score,
                     }
                     for k in c.top_to_optimize
                 ],

@@ -17,6 +17,7 @@ class Config:
     max_pages: int = 10
     competitor_list_limit: int = 15
     candidate_keyword_probe: int = 10
+    search_volume_lookup_limit: int = 25
     branch_regex: str = (
         r"(?i)(interim|personal|recruit|vermittl|headhunt|personaldienstl"
         r"|zeitarbeit|talent|besetzung|führungskraft|fachkraft|\bhr\b)"
@@ -52,5 +53,8 @@ class Config:
             max_pos=int(os.environ.get("SISTRIX_MAX_POS", cls.max_pos)),
             max_keywords_per_domain=int(
                 os.environ.get("SISTRIX_MAX_KEYWORDS_PER_DOMAIN", cls.max_keywords_per_domain)
+            ),
+            search_volume_lookup_limit=int(
+                os.environ.get("SISTRIX_SEARCH_VOLUME_LOOKUP_LIMIT", cls.search_volume_lookup_limit)
             ),
         )

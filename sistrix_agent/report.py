@@ -36,6 +36,12 @@ def _fmt_pos(position: int | None) -> str:
     return str(position) if position is not None else f"nicht in Top 100"
 
 
+def _fmt_volume(volume: int | None) -> str:
+    if volume is None:
+        return "–"
+    return f"{volume:,}".replace(",", ".")
+
+
 def _table(data: list[list[str]], widths: list[float], styles: dict[str, ParagraphStyle]) -> Table:
     rows = [[Paragraph(cell, styles["cellhead"]) for cell in data[0]]]
     rows += [[Paragraph(cell, styles["cell"]) for cell in row] for row in data[1:]]
@@ -76,7 +82,7 @@ def build_pdf(result: AnalysisResult, output_path: str) -> str:
     story.append(
         Paragraph(
             f"{result.company_name} · Domain <b>{result.own_domain}</b> · Google-Land: <b>{result.country}</b> · "
-            f"Erstellt am {datetime.now().strftime('%d.%m.%Y')} · Datenquelle: Sistrix (Connector)",
+            f"Erstellt am {datetime.now().strftime('%d.%m.%Y')} · Datenquelle: Sistrix API",
             styles["subtitle"],
         )
     )
@@ -119,7 +125,7 @@ def build_pdf(result: AnalysisResult, output_path: str) -> str:
         "Schritt 1: Wettbewerber-Kandidaten über die Sistrix-Wettbewerberliste von " + result.own_domain + " ermitteln und auf Branchenrelevanz filtern (Interim-Provider, Personalberatungen, Personalvermittler; Portale und Enzyklopädien ausgeschlossen).",
         "Schritt 2: Pro Kandidat ein Kurzprofil erstellen: Geschäftsmodell anhand der eigenen Top-Keywords, Sichtbarkeitsindex, Anzahl Top-10-Keywords und Keyword-Überschneidung mit uns. Daraus die 3 gefährlichsten Wettbewerber auswählen (Gewichtung: verlorene Keywords, Überschneidung, Sichtbarkeit).",
         "Schritt 3: Für jeden Top-Wettbewerber alle Keywords im Wettbewerb mit uns vergleichen (Sistrix: keyword_domain_seo, Positionen bis Top " + "100" + ") und die Keywords ermitteln, bei denen der Wettbewerber besser rankt als wir.",
-        "Schritt 4: Pro Wettbewerber die 5 Keywords mit dem höchsten Optimierungspotenzial (Position des Wettbewerbers × Positionsdifferenz) als Content-Empfehlung ausgeben.",
+        "Schritt 4: Pro Wettbewerber die 5 Keywords mit dem höchsten Optimierungspotenzial als Content-Empfehlung ausgeben. Score = Positionsdifferenz × Positionsgewicht des Wettbewerbers (1,0 / 0,6 / 0,3 / 0,15 für Platz 1–3 / 4–10 / 11–20 / 21+) × Suchvolumen-Faktor (1,0 / 1,15 / 1,3 / 1,6 / 2,0 ab 10 / 100 / 1.000 / 10.000 Suchanfragen pro Monat; Suchvolumen via Sistrix Keyword-API view=traffic, gedeckelt auf die stärksten Kandidaten pro Wettbewerber).",
     ]:
         story.append(Paragraph(step, styles["bullet"], bulletText="•"))
 
@@ -144,18 +150,19 @@ def build_pdf(result: AnalysisResult, output_path: str) -> str:
             story.append(Paragraph(reason, styles["bullet"], bulletText="•"))
 
         story.append(Paragraph("Top-5-Keywords zur Content-Optimierung", styles["h2"]))
-        rows = [["Keyword", "Unsere Position", "Wettbewerber-Position", "Unsere URL", "Wettbewerber-URL"]]
+        rows = [["Keyword", "Suchvolumen", "Unsere Position", "Wettbewerber-Position", "Unsere URL", "Wettbewerber-URL"]]
         for item in comp.top_to_optimize:
             rows.append(
                 [
                     item.keyword,
+                    _fmt_volume(item.search_volume),
                     _fmt_pos(item.own_position),
                     str(item.competitor_position),
                     item.own_url or "–",
                     item.competitor_url or "–",
                 ]
             )
-        story.append(_table(rows, [4.6 * cm, 2.2 * cm, 2.6 * cm, 4.2 * cm, 4.2 * cm], styles))
+        story.append(_table(rows, [4.0 * cm, 1.8 * cm, 1.9 * cm, 2.3 * cm, 3.9 * cm, 3.9 * cm], styles))
         story.append(Spacer(1, 0.2 * cm))
 
     story.append(Spacer(1, 0.4 * cm))
