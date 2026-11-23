@@ -22,3 +22,44 @@ def test_find_error_ignores_clean_payloads():
     assert find([{"kw": "interim manager", "position": 1, "url": "https://x.de/"}]) is None
     assert find(None) is None
     assert find("text") is None
+
+
+def test_rest_parsing_handles_answer_list_envelope():
+    # Envelope wie von api.sistrix.com (format=json) beobachtet am 2026-11-23:
+    # answer ist eine LISTE von Dicts, z. B. [{"sichtbarkeitsindex": [rows]}] oder [{"result": [rows]}]
+    visindex_payload = {
+        "method": [["domain.visibilityindex"]],
+        "info": [{"country": "de", "domain": "deutscheinterim.com"}],
+        "answer": [{"sichtbarkeitsindex": [{"domain": "deutscheinterim.com", "date": "2026-11-23", "value": "0.0906"}]}],
+        "credits": [{"used": 1}],
+    }
+    assert RestSistrixClient._scalar(visindex_payload) == 0.0906
+
+    comp_payload = {
+        "method": [["domain.competitors.seo"]],
+        "info": [{"country": "de", "device": "mobile", "domain": "deutscheinterim.com"}],
+        "answer": [{"result": [
+            {"domain": "deutscheinterim.com", "match": 100},
+            {"domain": "linkedin.com", "match": 45.8},
+            {"domain": "https://www.interim-profis.com/path", "match": 30.0},
+        ]}],
+        "credits": [{"used": 5}],
+    }
+    domains = RestSistrixClient._extract_domains(comp_payload)
+    assert domains == ["deutscheinterim.com", "linkedin.com", "interim-profis.com"]
+
+    kw_payload = {
+        "answer": [{"result": [
+            {"kw": "deutsche interim ag", "position": 1, "competition": 18, "traffic": 200, "url": "https://www.deutscheinterim.com/de"},
+            {"kw": "interimmanagement", "position": 1, "url": "https://www.deutscheinterim.com/de/x"},
+        ]}],
+    }
+    rows = [
+        d for d in RestSistrixClient._walk_dicts(RestSistrixClient._unwrap_answer(kw_payload))
+        if isinstance(d.get("kw"), str) and "position" in d
+    ]
+    assert [r["kw"] for r in rows] == ["deutsche interim ag", "interimmanagement"]
+
+    # alte Envelope (answer als Dict mit data / bare list) weiter unterstuetzt
+    assert RestSistrixClient._scalar({"answer": {"data": [{"value": 1.5}]}}) == 1.5
+    assert RestSistrixClient._extract_domains({"answer": ["a.de", "b.de", "a.de"]}) == ["a.de", "b.de"]

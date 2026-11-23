@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import os
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
 from typing import Any, Protocol
 
 from .models import KeywordRank
@@ -236,10 +236,9 @@ class RestSistrixClient:
         response = self._session.get(f"{self.BASE_URL}/{endpoint}", params=query, timeout=self._timeout)
         response.raise_for_status()
         payload = response.json()
-        if isinstance(payload, dict):
-            error = self._find_error(payload)
-            if error is not None:
-                raise RuntimeError(f"Sistrix API error on {endpoint}: {str(error)[:500]}")
+        error = self._find_error(payload)
+        if error is not None:
+            raise RuntimeError(f"Sistrix API error on {endpoint}: {str(error)[:500]}")
         return payload
 
     def raw_get(self, endpoint: str, params: dict[str, Any], with_format: bool = True) -> dict[str, Any]:
@@ -250,9 +249,24 @@ class RestSistrixClient:
         return {"http_status": response.status_code, "body": response.text[:800]}
 
     @staticmethod
-    def _rows(payload: Any) -> list[Any]:
-        if isinstance(payload, dict) and isinstance(payload.get("answer"), (dict, list)):
-            payload = payload["answer"]
+    def _unwrap_answer(payload: Any) -> Any:
+        if isinstance(payload, dict) and "answer" in payload:
+            return payload["answer"]
+        return payload
+
+    @staticmethod
+    def _walk_dicts(node: Any) -> Iterator[dict[str, Any]]:
+        if isinstance(node, dict):
+            yield node
+            for value in node.values():
+                yield from RestSistrixClient._walk_dicts(value)
+        elif isinstance(node, list):
+            for item in node:
+                yield from RestSistrixClient._walk_dicts(item)
+
+    @classmethod
+    def _rows(cls, payload: Any) -> list[Any]:
+        payload = cls._unwrap_answer(payload)
         if isinstance(payload, list):
             return payload
         if isinstance(payload, dict):
@@ -263,11 +277,14 @@ class RestSistrixClient:
                     return value
         return []
 
-    @staticmethod
-    def _scalar(payload: Any) -> float | None:
-        for item in RestSistrixClient._rows(payload):
-            if isinstance(item, dict) and "value" in item:
-                return float(item["value"])
+    @classmethod
+    def _scalar(cls, payload: Any) -> float | None:
+        for d in cls._walk_dicts(cls._unwrap_answer(payload)):
+            if "value" in d:
+                try:
+                    return float(d["value"])
+                except (TypeError, ValueError):
+                    continue
         return None
 
     @staticmethod
@@ -278,21 +295,30 @@ class RestSistrixClient:
         value = value.split("/", 1)[0]
         return value.removeprefix("www.")
 
+    @classmethod
+    def _extract_domains(cls, payload: Any) -> list[str]:
+        answer = cls._unwrap_answer(payload)
+        domains: list[str] = []
+        if isinstance(answer, list) and answer and all(isinstance(x, str) for x in answer):
+            domains = [cls._normalize_domain(x) for x in answer]
+        else:
+            for d in cls._walk_dicts(answer):
+                value = d.get("domain") or d.get("host") or d.get("url")
+                if isinstance(value, str) and value and "country" not in d:
+                    domains.append(cls._normalize_domain(value))
+        seen: set[str] = set()
+        unique: list[str] = []
+        for item in domains:
+            if item not in seen:
+                seen.add(item)
+                unique.append(item)
+        return unique
+
     async def competitors(self, domain: str, country: str, limit: int) -> list[str]:
         payload = self._get(
             "domain.competitors.seo", {"domain": domain, "country": country, "num": limit}
         )
-        domains: list[str] = []
-        for item in self._rows(payload):
-            if isinstance(item, str):
-                domains.append(self._normalize_domain(item))
-            elif isinstance(item, dict):
-                for key in ("domain", "host", "url"):
-                    value = item.get(key)
-                    if isinstance(value, str) and value:
-                        domains.append(self._normalize_domain(value))
-                        break
-        return domains
+        return self._extract_domains(payload)
 
     async def visindex(self, domain: str, country: str) -> float | None:
         payload = self._get("domain.visibilityindex", {"domain": domain, "country": country})
@@ -345,26 +371,24 @@ class RestSistrixClient:
             if regex_keyword:
                 params["regex_keyword"] = regex_keyword
             payload = self._get("keyword.domain.seo", params)
-            keywords: list[dict[str, Any]] = []
-            for item in self._rows(payload):
-                if isinstance(item.get("keywords"), list):
-                    keywords.extend(k for k in item["keywords"] if isinstance(k, dict))
-                elif "kw" in item or "keyword" in item:
-                    keywords.append(item)
-            if not keywords:
-                break
-            for item in keywords:
-                keyword = item.get("kw") or item.get("keyword")
-                if not keyword:
+            raw_count = 0
+            seen_keywords: set[str] = set()
+            for d in self._walk_dicts(self._unwrap_answer(payload)):
+                keyword = d.get("kw") or d.get("keyword")
+                if not (isinstance(keyword, str) and keyword and "position" in d):
                     continue
+                raw_count += 1
+                if keyword in seen_keywords:
+                    continue
+                seen_keywords.add(keyword)
                 rank = KeywordRank(
-                    keyword=str(keyword),
-                    position=int(item["position"]),
-                    url=str(item.get("url") or ""),
+                    keyword=keyword,
+                    position=int(d["position"]),
+                    url=str(d.get("url") or ""),
                 )
                 if rank.position <= to_pos and (pattern is None or pattern.search(rank.keyword)):
                     rows.append(rank)
-            if len(keywords) < page_size:
+            if raw_count < page_size:
                 break
             offset += page_size
         return rows
