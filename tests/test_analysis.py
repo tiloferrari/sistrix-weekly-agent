@@ -259,3 +259,35 @@ def test_search_volume_lookup_is_capped_and_applied():
     top = result.competitors[0].top_to_optimize
     assert top[0].keyword == "interim a"
     assert top[0].search_volume == 8100
+
+
+def test_row_level_traffic_used_as_search_volume():
+    capture = {
+        "own": {
+            "domain": "deutscheinterim.com",
+            "visindex": 0.1,
+            "keywords": [
+                {"keyword": "interim a", "position": 20},
+                {"keyword": "interim b", "position": 20},
+            ],
+        },
+        "competitor_list": ["interim-profis.com"],
+        "competitor_candidates": [
+            {
+                "domain": "interim-profis.com",
+                "visindex": 0.2,
+                "kwcount_top10": 10,
+                "top_keywords": ["interim a"],
+                "keywords": [
+                    {"keyword": "interim a", "position": 10, "traffic": 90},
+                    {"keyword": "interim b", "position": 10, "traffic": 8100},
+                ],
+            }
+        ],
+        "assume_unranked_if_not_fetched": False,
+    }
+    cfg = Config(search_volume_lookup_limit=0)
+    result = asyncio.run(run_weekly_analysis(StaticSistrixClient(capture), cfg))
+    top = result.competitors[0].top_to_optimize
+    assert top[0].keyword == "interim b"
+    assert top[0].search_volume == 8100

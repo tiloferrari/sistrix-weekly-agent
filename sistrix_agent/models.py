@@ -8,6 +8,7 @@ class KeywordRank:
     keyword: str
     position: int
     url: str = ""
+    search_volume: int | None = None
 
 
 @dataclass

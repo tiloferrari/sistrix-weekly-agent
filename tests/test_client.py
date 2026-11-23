@@ -63,3 +63,15 @@ def test_rest_parsing_handles_answer_list_envelope():
     # alte Envelope (answer als Dict mit data / bare list) weiter unterstuetzt
     assert RestSistrixClient._scalar({"answer": {"data": [{"value": 1.5}]}}) == 1.5
     assert RestSistrixClient._extract_domains({"answer": ["a.de", "b.de", "a.de"]}) == ["a.de", "b.de"]
+
+
+def test_parse_rank_reads_traffic_as_search_volume():
+    parse = RestSistrixClient._parse_rank
+    rank = parse({"kw": "deutsche interim ag", "position": 1, "competition": 18, "traffic": 200, "url": "https://www.deutscheinterim.com/de"})
+    assert rank is not None
+    assert rank.keyword == "deutsche interim ag"
+    assert rank.position == 1
+    assert rank.search_volume == 200
+    assert parse({"kw": "x", "position": 3}).search_volume is None
+    assert parse({"position": 3}) is None
+    assert parse({"kw": "x"}) is None

@@ -77,9 +77,15 @@ async def run_weekly_analysis(client: SistrixClient, cfg: Config) -> AnalysisRes
     full_profiles = [await collect_profile(client, p.domain, cfg, own=False) for p in chosen]
     reports = []
     for profile in full_profiles:
-        base_lost, _ = lost_keywords(own, profile, cfg)
-        candidates = [item.keyword for item in base_lost[: cfg.search_volume_lookup_limit]]
-        volumes = await client.search_volumes(candidates, cfg.country) if candidates else {}
+        row_volumes = {k.keyword: k.search_volume for k in profile.keywords if k.search_volume}
+        base_lost, _ = lost_keywords(own, profile, cfg, volumes=row_volumes)
+        missing = [
+            item.keyword
+            for item in base_lost[: cfg.search_volume_lookup_limit]
+            if item.keyword not in row_volumes
+        ]
+        api_volumes = await client.search_volumes(missing, cfg.country) if missing else {}
+        volumes = {**row_volumes, **api_volumes}
         reports.append(build_competitor_report(own, profile, cfg, volumes=volumes))
     reports.sort(key=lambda r: danger_score(r.profile, own, r.lost, r.overlap), reverse=True)
     return AnalysisResult(

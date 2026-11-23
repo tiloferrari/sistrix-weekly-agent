@@ -187,7 +187,12 @@ class StaticSistrixClient:
         import re
 
         rows = [
-            KeywordRank(keyword=r["keyword"], position=int(r["position"]), url=r.get("url", ""))
+            KeywordRank(
+                keyword=r["keyword"],
+                position=int(r["position"]),
+                url=r.get("url", ""),
+                search_volume=int(r["traffic"]) if r.get("traffic") is not None else None,
+            )
             for r in self._profile(domain).get("keywords", [])
             if int(r["position"]) <= to_pos
         ]
@@ -288,6 +293,19 @@ class RestSistrixClient:
         return None
 
     @staticmethod
+    def _parse_rank(d: dict[str, Any]) -> KeywordRank | None:
+        keyword = d.get("kw") or d.get("keyword")
+        if not (isinstance(keyword, str) and keyword and "position" in d):
+            return None
+        volume = d.get("traffic") or d.get("searchvolume") or d.get("search_volume")
+        return KeywordRank(
+            keyword=keyword,
+            position=int(d["position"]),
+            url=str(d.get("url") or ""),
+            search_volume=int(volume) if isinstance(volume, (int, float)) and not isinstance(volume, bool) else None,
+        )
+
+    @staticmethod
     def _normalize_domain(value: str) -> str:
         value = value.strip().lower()
         if "://" in value:
@@ -374,18 +392,13 @@ class RestSistrixClient:
             raw_count = 0
             seen_keywords: set[str] = set()
             for d in self._walk_dicts(self._unwrap_answer(payload)):
-                keyword = d.get("kw") or d.get("keyword")
-                if not (isinstance(keyword, str) and keyword and "position" in d):
+                rank = self._parse_rank(d)
+                if rank is None:
                     continue
                 raw_count += 1
-                if keyword in seen_keywords:
+                if rank.keyword in seen_keywords:
                     continue
-                seen_keywords.add(keyword)
-                rank = KeywordRank(
-                    keyword=keyword,
-                    position=int(d["position"]),
-                    url=str(d.get("url") or ""),
-                )
+                seen_keywords.add(rank.keyword)
                 if rank.position <= to_pos and (pattern is None or pattern.search(rank.keyword)):
                     rows.append(rank)
             if raw_count < page_size:
