@@ -32,6 +32,25 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
     client = RestSistrixClient()
     result = await run_weekly_analysis(client, cfg)
 
+    diagnostics = None
+    if result.own.visindex is None or not result.competitors:
+        diagnostics = {
+            "trigger": "leere Sistrix-Antworten (visindex None oder keine Wettbewerber)",
+            "visindex_json": client.raw_get(
+                "domain.visibilityindex", {"domain": payload.own_domain, "country": payload.country}
+            ),
+            "visindex_xml": client.raw_get(
+                "domain.visibilityindex", {"domain": payload.own_domain, "country": payload.country}, with_format=False
+            ),
+            "competitors": client.raw_get(
+                "domain.competitors.seo", {"domain": payload.own_domain, "country": payload.country, "num": 5}
+            ),
+            "keywords": client.raw_get(
+                "keyword.domain.seo",
+                {"domain": payload.own_domain, "country": payload.country, "limit": 5, "to_pos": 100},
+            ),
+        }
+
     filename = f"sistrix-weekly-report-{date.today().isoformat()}.pdf"
     pdf_path = f"/tmp/{filename}"
     build_pdf(result, pdf_path)
@@ -64,6 +83,7 @@ async def sistrix_weekly_analysis(payload: WeeklySeoInput) -> dict:
         ],
         "pdf_file_name": filename,
         "pdf_base64": pdf_base64,
+        "diagnostics": diagnostics,
     }
 
 

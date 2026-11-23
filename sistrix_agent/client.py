@@ -209,16 +209,45 @@ class RestSistrixClient:
         self._timeout = timeout
         self._session = requests.Session()
 
+    @staticmethod
+    def _find_error(payload: Any) -> Any:
+        if isinstance(payload, dict):
+            error = payload.get("error")
+            if error:
+                return error
+            if str(payload.get("status", "")).lower() == "error":
+                return payload
+            if "error_code" in payload or "error_message" in payload:
+                return payload
+            for value in payload.values():
+                if isinstance(value, (dict, list)):
+                    found = RestSistrixClient._find_error(value)
+                    if found is not None:
+                        return found
+        elif isinstance(payload, list):
+            for item in payload:
+                found = RestSistrixClient._find_error(item)
+                if found is not None:
+                    return found
+        return None
+
     def _get(self, endpoint: str, params: dict[str, Any]) -> Any:
         query = {"key": self._api_key, "api_key": self._api_key, "format": "json", **params}
         response = self._session.get(f"{self.BASE_URL}/{endpoint}", params=query, timeout=self._timeout)
         response.raise_for_status()
         payload = response.json()
         if isinstance(payload, dict):
-            error = payload.get("error") or (payload.get("answer") or {}).get("error") if isinstance(payload.get("answer"), dict) else payload.get("error")
-            if error:
-                raise RuntimeError(f"Sistrix API error on {endpoint}: {error}")
+            error = self._find_error(payload)
+            if error is not None:
+                raise RuntimeError(f"Sistrix API error on {endpoint}: {str(error)[:500]}")
         return payload
+
+    def raw_get(self, endpoint: str, params: dict[str, Any], with_format: bool = True) -> dict[str, Any]:
+        query = {"key": self._api_key, "api_key": self._api_key, **params}
+        if with_format:
+            query["format"] = "json"
+        response = self._session.get(f"{self.BASE_URL}/{endpoint}", params=query, timeout=self._timeout)
+        return {"http_status": response.status_code, "body": response.text[:800]}
 
     @staticmethod
     def _rows(payload: Any) -> list[Any]:
