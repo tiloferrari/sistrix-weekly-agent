@@ -1,0 +1,1238 @@
+{
+  "captured_at": "2026-11-23",
+  "country": "de",
+  "note": "Live-Abfrage ueber den Sistrix-Connector (sistrix_e5d7) am 2026-11-23: eigene Domain Top 100 Zeilen, Wettbewerberliste Top 15, Kandidaten-Probe Top 10, Top-3 voll (Top 30 Zeilen). search_volumes: echte monatliche Suchvolumen (keyword view=traffic, Land de, 2026-11-23).",
+  "assume_unranked_if_not_fetched": true,
+  "competitor_list": [
+    "linkedin.com",
+    "wikipedia.org",
+    "indeed.com",
+    "stepstone.de",
+    "interim-profis.com",
+    "ddim.de",
+    "managementangels.com",
+    "gabler.de",
+    "linguee.de",
+    "michaelpage.de",
+    "youtube.com",
+    "interim-aid.de",
+    "nigelwright.com",
+    "interim-x.com",
+    "haufe-akademie.de"
+  ],
+  "own": {
+    "domain": "deutscheinterim.com",
+    "visindex": 0.0906,
+    "kwcount": 1077,
+    "kwcount_top10": 628,
+    "keywords": [
+      {
+        "keyword": "deutsche interim ag",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de"
+      },
+      {
+        "keyword": "interimmanagement",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "was ist interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interimsmanagement einkauf",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/operations-management/einkauf"
+      },
+      {
+        "keyword": "deutsche interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de"
+      },
+      {
+        "keyword": "was ist interim management",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interimsgesch\u00e4ftf\u00fchrer",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/mittleres-management/interim-geschaeftsfuehrer"
+      },
+      {
+        "keyword": "interim recruiting",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/recruiting"
+      },
+      {
+        "keyword": "interim management berlin",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-berlin"
+      },
+      {
+        "keyword": "interim management frankfurt",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-frankfurt"
+      },
+      {
+        "keyword": "interim manager frankfurt",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-frankfurt"
+      },
+      {
+        "keyword": "interim manager vertrieb",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/vertrieb"
+      },
+      {
+        "keyword": "interim coo",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/c-level/interim-coo"
+      },
+      {
+        "keyword": "interim management essen",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-essen"
+      },
+      {
+        "keyword": "interim vertrieb",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/vertrieb"
+      },
+      {
+        "keyword": "interim sales management",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/vertrieb"
+      },
+      {
+        "keyword": "interim cro",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/c-level/interim-cro"
+      },
+      {
+        "keyword": "management interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim management stuttgart",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-stuttgart"
+      },
+      {
+        "keyword": "finance interim manager",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen"
+      },
+      {
+        "keyword": "was ist ein interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim management vertrieb",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/vertrieb"
+      },
+      {
+        "keyword": "interim management was ist das",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim qualit\u00e4tsmanager",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/operations-management/qualitaetsmanagement"
+      },
+      {
+        "keyword": "interim management controlling",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen/controlling"
+      },
+      {
+        "keyword": "interim treasury",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen/treasury"
+      },
+      {
+        "keyword": "payroll interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/payroll"
+      },
+      {
+        "keyword": "blog interim management",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/publikationen/blog"
+      },
+      {
+        "keyword": "interims ceo",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/manager-uebersicht/interim-ceo-und-experte-fuer-restrukturierung-und-transformation"
+      },
+      {
+        "keyword": "interimsmanagement deutschland",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim buchhaltung",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen/buchhaltung"
+      },
+      {
+        "keyword": "interim controlling",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen/controlling"
+      },
+      {
+        "keyword": "interim manager finanzen",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen"
+      },
+      {
+        "keyword": "gesch\u00e4ftsf\u00fchrer auf zeit",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/mittleres-management/interim-geschaeftsfuehrer"
+      },
+      {
+        "keyword": "interim supply chain",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/operations-management/supply-chain-management"
+      },
+      {
+        "keyword": "interim ag",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de"
+      },
+      {
+        "keyword": "interimsl\u00f6sung personal",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen"
+      },
+      {
+        "keyword": "interim management buchhaltung",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen/rechnungswesen"
+      },
+      {
+        "keyword": "vermittlung interim management",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interims management m\u00fcnchen",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-muenchen"
+      },
+      {
+        "keyword": "interim ceo deutsch",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/c-level/interim-ceo"
+      },
+      {
+        "keyword": "interim marketing management",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/marketing"
+      },
+      {
+        "keyword": "interimsmanagement frankfurt",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-frankfurt"
+      },
+      {
+        "keyword": "interim cdo",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/c-level/interim-cdo"
+      },
+      {
+        "keyword": "recruiting interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/recruiting"
+      },
+      {
+        "keyword": "interim management n\u00fcrnberg",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-nuernberg"
+      },
+      {
+        "keyword": "interim ingenieur",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/manager-uebersicht/5774-ingenieur-automatisierung-komplexe-produktion"
+      },
+      {
+        "keyword": "interim manager cro",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/c-level/interim-cro"
+      },
+      {
+        "keyword": "hrbp interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/hr-business-partner"
+      },
+      {
+        "keyword": "interim manager recruiter",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/recruiting"
+      },
+      {
+        "keyword": "interim rechnungswesen",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/finanzen/rechnungswesen"
+      },
+      {
+        "keyword": "interim manager hrbp",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/hr-business-partner"
+      },
+      {
+        "keyword": "interim bonn",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-bonn"
+      },
+      {
+        "keyword": "interim management unternehmen",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim manager personalleiter",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen"
+      },
+      {
+        "keyword": "interim management frankfurt am main",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-frankfurt"
+      },
+      {
+        "keyword": "interimsmanager berlin",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-berlin"
+      },
+      {
+        "keyword": "interim manager program manager",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/professionals/interim-program-manager"
+      },
+      {
+        "keyword": "interim management bonn",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-bonn"
+      },
+      {
+        "keyword": "interim manager program management",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/professionals/interim-program-manager"
+      },
+      {
+        "keyword": "interim ag team",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/ueber-uns"
+      },
+      {
+        "keyword": "personal interim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen"
+      },
+      {
+        "keyword": "manager auf zeit schweiz",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/unternehmensfuehrung/portfoliomanagement"
+      },
+      {
+        "keyword": "deutscheinterim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de"
+      },
+      {
+        "keyword": "vertrieb interim management",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/vertrieb"
+      },
+      {
+        "keyword": "interim management it leiter",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/informationstechnologie"
+      },
+      {
+        "keyword": "interim headhunter",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/recruiting"
+      },
+      {
+        "keyword": "swissinterim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de"
+      },
+      {
+        "keyword": "was ist interimmanagement",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim management mannheim",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-mannheim"
+      },
+      {
+        "keyword": "was ist interimsmanagement",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim programme manager jobs",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/professionals/interim-program-manager"
+      },
+      {
+        "keyword": "interim programme manager",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/professionals/interim-program-manager"
+      },
+      {
+        "keyword": "interim programme director",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/funktionen/professionals/interim-program-manager"
+      },
+      {
+        "keyword": "interim management hrbp",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/hr-business-partner"
+      },
+      {
+        "keyword": "interim group blog",
+        "position": 1,
+        "url": "https://www.deutscheinterim.com/de/publikationen/blog"
+      },
+      {
+        "keyword": "interim management",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interimsmanagement",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "was bedeutet interim",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/was-ist-interim-management"
+      },
+      {
+        "keyword": "interim einkaufsleiter",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/operations-management/einkauf"
+      },
+      {
+        "keyword": "interim gesch\u00e4ftsf\u00fchrer",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/funktionen/mittleres-management/interim-geschaeftsfuehrer"
+      },
+      {
+        "keyword": "interim marketing manager",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/marketing"
+      },
+      {
+        "keyword": "interim manager stuttgart",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-stuttgart"
+      },
+      {
+        "keyword": "interim manager berlin",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-berlin"
+      },
+      {
+        "keyword": "interim hr business partner",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen/hr-business-partner"
+      },
+      {
+        "keyword": "interim management deutschland",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de"
+      },
+      {
+        "keyword": "ceo interim",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/funktionen/c-level/interim-ceo"
+      },
+      {
+        "keyword": "interim manager essen",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-essen"
+      },
+      {
+        "keyword": "hr interim management jobs",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/fachbereiche/personalwesen"
+      },
+      {
+        "keyword": "interim manager k\u00f6ln",
+        "position": 2,
+        "url": "https://www.deutscheinterim.com/de/regionen/interim-management-koeln"
+      }
+    ]
+  },
+  "competitor_candidates": [
+    {
+      "domain": "interim-profis.com",
+      "visindex": 0.1204,
+      "kwcount_top10": null,
+      "top_keywords": [
+        "was bedeutet interim",
+        "interim profis",
+        "gespr\u00e4che f\u00fchren",
+        "interim manager tagessatz",
+        "interim management m\u00fcnchen"
+      ],
+      "keywords": [
+        {
+          "keyword": "was bedeutet interim",
+          "position": 1,
+          "url": "https://www.interim-profis.com/fachartikel/was-bedeutet-interim-management.html"
+        },
+        {
+          "keyword": "interim profis",
+          "position": 1,
+          "url": "https://www.interim-profis.com/"
+        },
+        {
+          "keyword": "gespr\u00e4che f\u00fchren",
+          "position": 1,
+          "url": "https://www.interim-profis.com/fachartikel/die-10-erfolgsregeln-fuer-eine-gute-gespraechsfuehrung.html"
+        },
+        {
+          "keyword": "interim manager tagessatz",
+          "position": 1,
+          "url": "https://www.interim-profis.com/fachartikel/tagessatz-interim-manager-zu-discountpreisen.html"
+        },
+        {
+          "keyword": "interim management m\u00fcnchen",
+          "position": 1,
+          "url": "https://www.interim-profis.com/region/muenchen.html"
+        },
+        {
+          "keyword": "interim manager controlling",
+          "position": 1,
+          "url": "https://www.interim-profis.com/fachartikel/interim-leiter-controlling.html"
+        },
+        {
+          "keyword": "interim personalleiter",
+          "position": 1,
+          "url": "https://www.interim-profis.com/funktion/interim-personalleiter.html"
+        },
+        {
+          "keyword": "interim management d\u00fcsseldorf",
+          "position": 1,
+          "url": "https://www.interim-profis.com/region/duesseldorf.html"
+        },
+        {
+          "keyword": "konversation f\u00fchren",
+          "position": 1,
+          "url": "https://www.interim-profis.com/fachartikel/die-10-erfolgsregeln-fuer-eine-gute-gespraechsfuehrung.html"
+        },
+        {
+          "keyword": "interim manager berlin",
+          "position": 1,
+          "url": "https://www.interim-profis.com/region/berlin.html"
+        }
+      ]
+    },
+    {
+      "domain": "ddim.de",
+      "visindex": 0.063,
+      "kwcount_top10": null,
+      "top_keywords": [
+        "ddim",
+        "ddim provider",
+        "ddim vorstand",
+        "ddim regional",
+        "ddim mitgliedschaft"
+      ],
+      "keywords": [
+        {
+          "keyword": "ddim",
+          "position": 1,
+          "url": "https://ddim.de/"
+        },
+        {
+          "keyword": "ddim provider",
+          "position": 1,
+          "url": "https://ddim.de/ddim/partner-und-kooperationen/assoziierte-provider/"
+        },
+        {
+          "keyword": "ddim vorstand",
+          "position": 1,
+          "url": "https://ddim.de/ddim/ueber-uns/vorstand/"
+        },
+        {
+          "keyword": "ddim regional",
+          "position": 1,
+          "url": "https://ddim.de/events/ddim-regional-berlin-21-mai-2026/"
+        },
+        {
+          "keyword": "ddim mitgliedschaft",
+          "position": 1,
+          "url": "https://ddim.de/interim-manager-ddim/mitglied-werden/voraussetzungen-fuer-die-ddim-mitgliedschaft/"
+        },
+        {
+          "keyword": "aufsichtsrat werden",
+          "position": 1,
+          "url": "https://ddim.de/zehn-tipps-zum-gefundenwerden-in-der-aufsichtsrats-und-beiratslandschaft/"
+        },
+        {
+          "keyword": "wie wird man aufsichtsrat",
+          "position": 1,
+          "url": "https://ddim.de/zehn-tipps-zum-gefundenwerden-in-der-aufsichtsrats-und-beiratslandschaft/"
+        }
+      ]
+    },
+    {
+      "domain": "managementangels.com",
+      "visindex": 0.0136,
+      "kwcount_top10": null,
+      "top_keywords": [
+        "management angels",
+        "management angels gmbh",
+        "interim international",
+        "interims management hamburg",
+        "interims manager hamburg"
+      ],
+      "keywords": [
+        {
+          "keyword": "management angels",
+          "position": 1,
+          "url": "https://www.managementangels.com/"
+        },
+        {
+          "keyword": "management angels gmbh",
+          "position": 1,
+          "url": "https://www.managementangels.com/standorte/stuttgart/"
+        },
+        {
+          "keyword": "interim international",
+          "position": 1,
+          "url": "https://www.managementangels.com/funktionen/international/"
+        },
+        {
+          "keyword": "interims management hamburg",
+          "position": 1,
+          "url": "https://www.managementangels.com/standorte/hamburg/"
+        },
+        {
+          "keyword": "interims manager hamburg",
+          "position": 1,
+          "url": "https://www.managementangels.com/standorte/hamburg/"
+        },
+        {
+          "keyword": "interim management freiburg",
+          "position": 1,
+          "url": "https://www.managementangels.com/standorte/freiburg/"
+        },
+        {
+          "keyword": "management angels hamburg",
+          "position": 1,
+          "url": "https://www.managementangels.com/"
+        },
+        {
+          "keyword": "interim manager profil",
+          "position": 1,
+          "url": "https://www.managementangels.com/fuer-interim-manager/taetigkeitsprofil-interim-manager/"
+        },
+        {
+          "keyword": "management angels frankfurt",
+          "position": 1,
+          "url": "https://www.managementangels.com/standorte/frankfurt/"
+        }
+      ]
+    },
+    {
+      "domain": "michaelpage.de",
+      "visindex": 0.9087,
+      "kwcount_top10": null,
+      "top_keywords": [
+        "michael page",
+        "page personnel",
+        "gebietsverkaufsleiter",
+        "michael page berlin",
+        "property manager deutsch"
+      ],
+      "keywords": [
+        {
+          "keyword": "michael page",
+          "position": 1,
+          "url": "https://www.michaelpage.de/"
+        },
+        {
+          "keyword": "page personnel",
+          "position": 1,
+          "url": "https://www.michaelpage.de/"
+        },
+        {
+          "keyword": "gebietsverkaufsleiter",
+          "position": 1,
+          "url": "https://www.michaelpage.de/jobs/gebietsverkaufsleiter/deutschland"
+        },
+        {
+          "keyword": "michael page berlin",
+          "position": 1,
+          "url": "https://www.michaelpage.de/kontakt/berlin"
+        },
+        {
+          "keyword": "property manager deutsch",
+          "position": 1,
+          "url": "https://www.michaelpage.de/advice/karriere-tipps/property-manager-gehalt-aufgaben-ausbildung"
+        },
+        {
+          "keyword": "michael page d\u00fcsseldorf",
+          "position": 1,
+          "url": "https://www.michaelpage.de/kontakt/duesseldorf"
+        },
+        {
+          "keyword": "head of accounting",
+          "position": 1,
+          "url": "https://www.michaelpage.de/jobs/head-of-accounting"
+        },
+        {
+          "keyword": "mypage",
+          "position": 1,
+          "url": "https://www.michaelpage.de/mypage"
+        },
+        {
+          "keyword": "michael page hamburg",
+          "position": 1,
+          "url": "https://www.michaelpage.de/kontakt/hamburg"
+        },
+        {
+          "keyword": "headhunter finance",
+          "position": 1,
+          "url": "https://www.michaelpage.de/personalberatung/finance-accounting"
+        }
+      ]
+    },
+    {
+      "domain": "interim-aid.de",
+      "visindex": 0.0447,
+      "kwcount_top10": 166,
+      "top_keywords": [
+        "interim manager digitalisierung",
+        "interim medizin",
+        "interimsmanager hr",
+        "ceo auf zeit",
+        "interim wiesbaden",
+        "was ist ein interim manager"
+      ],
+      "keywords": [
+        {
+          "keyword": "interim manager digitalisierung",
+          "position": 1,
+          "url": "https://www.interim-aid.de/interim-manager-digitalisierung/"
+        },
+        {
+          "keyword": "interim medizin",
+          "position": 1,
+          "url": "https://www.interim-aid.de/interim-manager-healthcare/"
+        },
+        {
+          "keyword": "interimsmanager hr",
+          "position": 1,
+          "url": "https://www.interim-aid.de/interim-manager-hr/"
+        },
+        {
+          "keyword": "ceo auf zeit",
+          "position": 1,
+          "url": "https://www.interim-aid.de/interim-ceo/"
+        },
+        {
+          "keyword": "interim wiesbaden",
+          "position": 1,
+          "url": "https://www.interim-aid.de/"
+        },
+        {
+          "keyword": "was ist ein interim manager",
+          "position": 2,
+          "url": "https://www.interim-aid.de/wissen/blog/detail/was-ist-ein-interim-manager-aufgaben-vorteile-und-einsatzbereiche/"
+        },
+        {
+          "keyword": "interim cto",
+          "position": 2,
+          "url": "https://www.interim-aid.de/interim-cto/"
+        },
+        {
+          "keyword": "interim manager finden",
+          "position": 2,
+          "url": "https://www.interim-aid.de/interim-manager/"
+        },
+        {
+          "keyword": "interim logistik",
+          "position": 2,
+          "url": "https://www.interim-aid.de/interim-manager-logistik/"
+        },
+        {
+          "keyword": "interim buchhaltung",
+          "position": 2,
+          "url": "https://www.interim-aid.de/interim-manager/interim-finanzbuchhalter/"
+        },
+        {
+          "keyword": "gesch\u00e4ftsf\u00fchrer auf zeit",
+          "position": 2,
+          "url": "https://www.interim-aid.de/interim-ceo/"
+        },
+        {
+          "keyword": "interims manager bedeutung",
+          "position": 2,
+          "url": "https://www.interim-aid.de/wissen/blog/detail/was-ist-ein-interim-manager-aufgaben-vorteile-und-einsatzbereiche/"
+        },
+        {
+          "keyword": "hr interim management berlin",
+          "position": 2,
+          "url": "https://www.interim-aid.de/interim-manager-berlin/"
+        },
+        {
+          "keyword": "mangelnde kapazit\u00e4t",
+          "position": 2,
+          "url": "https://www.interim-aid.de/wissen/blog/detail/wenn-kapazitaeten-fehlen-aber-entscheidungen-nicht-warten-duerfen/"
+        },
+        {
+          "keyword": "interim ceo roles",
+          "position": 2,
+          "url": "https://www.interim-aid.de/interim-ceo/"
+        },
+        {
+          "keyword": "interim manager agb",
+          "position": 2,
+          "url": "https://www.interim-aid.de/agb/"
+        },
+        {
+          "keyword": "interim group blog",
+          "position": 2,
+          "url": "https://www.interim-aid.de/wissen/blog/"
+        },
+        {
+          "keyword": "interim manager",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager/"
+        },
+        {
+          "keyword": "interim werksleiter",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-werkleiter/"
+        },
+        {
+          "keyword": "interim management supply chain",
+          "position": 3,
+          "url": "https://www.interim-aid.de/quicksearch/kandidat/cand20944/"
+        },
+        {
+          "keyword": "payroll interim",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager/entgeltabrechnung-payroll/"
+        },
+        {
+          "keyword": "interim werkleiter",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-werkleiter/"
+        },
+        {
+          "keyword": "interim cfo services",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager/interim-cfo/"
+        },
+        {
+          "keyword": "interim provider hamburg",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager-hamburg/"
+        },
+        {
+          "keyword": "interim manager mittelstand",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager-stuttgart/"
+        },
+        {
+          "keyword": "interim chef",
+          "position": 3,
+          "url": "https://www.interim-aid.de/wissen/blog/detail/was-ist-ein-interims-chef-und-wann-braucht-ein-unternehmen-fuehrung-auf-zeit/"
+        },
+        {
+          "keyword": "interim chief executive",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-ceo/"
+        },
+        {
+          "keyword": "interim project controller",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager/interim-controller/"
+        },
+        {
+          "keyword": "interim rechnungswesen",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager/interim-finanzbuchhalter/"
+        },
+        {
+          "keyword": "outplacement manager",
+          "position": 3,
+          "url": "https://www.interim-aid.de/interim-manager/outplacement/"
+        }
+      ],
+      "kwcount": 258
+    },
+    {
+      "domain": "nigelwright.com",
+      "visindex": 0.0305,
+      "kwcount_top10": 651,
+      "top_keywords": [
+        "nigel wright",
+        "headhunter einkauf",
+        "interim manager einkauf",
+        "nigel wright group",
+        "headhunter marketing",
+        "headhunter fashion"
+      ],
+      "keywords": [
+        {
+          "keyword": "nigel wright",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/stellenangebote"
+        },
+        {
+          "keyword": "headhunter einkauf",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalberatung-einkauf-supply-chain"
+        },
+        {
+          "keyword": "interim manager einkauf",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/interim-management-einkauf"
+        },
+        {
+          "keyword": "nigel wright group",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de"
+        },
+        {
+          "keyword": "headhunter marketing",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/headhunter-marketing-frankfurt"
+        },
+        {
+          "keyword": "headhunter fashion",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/headhunter-personalberatung-fashion-lifestyle"
+        },
+        {
+          "keyword": "executive search marketing",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/headhunter-marketing-frankfurt"
+        },
+        {
+          "keyword": "marketing recruitment",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/marketing-recruitment"
+        },
+        {
+          "keyword": "interim logistik",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/interim-management-logistik"
+        },
+        {
+          "keyword": "marketing recruitment agency",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/marketing-recruitment"
+        },
+        {
+          "keyword": "headhunter digitalisierung",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/headhunter-digitale-transformation-deutschland"
+        },
+        {
+          "keyword": "personalvermittlung f\u00fcr ingenieure",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-ingenieure-koln"
+        },
+        {
+          "keyword": "marketing recruitment agencies",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/marketing-recruitment"
+        },
+        {
+          "keyword": "personalberater digital",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalberatung-digital-marketing"
+        },
+        {
+          "keyword": "headhunter it k\u00f6ln",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/it-headhunter-koln"
+        },
+        {
+          "keyword": "interim leadership",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/c-level-interim-management-deutschland"
+        },
+        {
+          "keyword": "personalberatung logistik m\u00fcnchen",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalberatung-logistik-munchen"
+        },
+        {
+          "keyword": "personalvermittlung ingenieure k\u00f6ln",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-ingenieure-koln"
+        },
+        {
+          "keyword": "data science recruitment",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/data-science-recruitment-germany"
+        },
+        {
+          "keyword": "personalberatung digitalisierung",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalberatung-digital-marketing"
+        },
+        {
+          "keyword": "personalvermittlung it frankfurt",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalberatung-it-frankfurt-am-main"
+        },
+        {
+          "keyword": "headhunter tourismus",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/headhunter-touristik-reisen-freizeit"
+        },
+        {
+          "keyword": "marketing consultant agency",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/marketing-recruitment"
+        },
+        {
+          "keyword": "personalvermittlung hamburg marketing",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-hamburg-marketing"
+        },
+        {
+          "keyword": "personalvermittlung m\u00fcnchen marketing",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-marketing-munchen"
+        },
+        {
+          "keyword": "interimsleiter",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/interimsleiter"
+        },
+        {
+          "keyword": "headhunter hamburg marketing",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-hamburg-marketing"
+        },
+        {
+          "keyword": "headhunter marketing m\u00fcnchen",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-marketing-munchen"
+        },
+        {
+          "keyword": "personalberatung m\u00fcnchen marketing",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-marketing-munchen"
+        },
+        {
+          "keyword": "personalberatung marketing m\u00fcnchen",
+          "position": 1,
+          "url": "https://www.nigelwright.com/de/personalvermittlung-marketing-munchen"
+        }
+      ],
+      "kwcount": 1107
+    },
+    {
+      "domain": "interim-x.com",
+      "visindex": 0.056,
+      "kwcount_top10": 206,
+      "top_keywords": [
+        "interim-x",
+        "ramp down management",
+        "interim x",
+        "plattform interim management",
+        "interim manager finden",
+        "interim manager produktion"
+      ],
+      "keywords": [
+        {
+          "keyword": "interim-x",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "ramp down management",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/projekt/operations_manager_mwd_ramp_down_management_bei_einem_automobilzulieferer-579"
+        },
+        {
+          "keyword": "interim x",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "plattform interim management",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/fuer-interim-manager"
+        },
+        {
+          "keyword": "interim manager finden",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/fuer-unternehmen"
+        },
+        {
+          "keyword": "interim manager produktion",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/einsatzgebiete/produktion-technik"
+        },
+        {
+          "keyword": "interimsmanagement angebote",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/projekte"
+        },
+        {
+          "keyword": "interim hr director",
+          "position": 1,
+          "url": "https://www.interim-x.com/en/project/hr_director_germany_mwd_ad_interim_mit_option_auf_festanstellung_neuausrichtung_und_fuehrung_des_hr_bereichs_bei_einem_unternehmen_in_der_chemieindustrie-2050"
+        },
+        {
+          "keyword": "manager operations deutsch",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/projekt/operations_manager_wmd_operations_manager_wmd-565"
+        },
+        {
+          "keyword": "ad interim position",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/fuer-interim-manager/interim-management-ratgeber"
+        },
+        {
+          "keyword": "ex interim",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "temporary manager",
+          "position": 1,
+          "url": "https://www.interim-x.com/en/for-interim-managers/interim-management-temporary-managers"
+        },
+        {
+          "keyword": "ad interim manager gesucht",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/projekte"
+        },
+        {
+          "keyword": "betweens interim",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "interim excellence gmbh m\u00fcnchen",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "www interim",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "b\u00f6rse interim manager",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/fuer-interim-manager"
+        },
+        {
+          "keyword": "interimmanager b ing",
+          "position": 1,
+          "url": "https://www.interim-x.com/de/fuer-interim-manager"
+        },
+        {
+          "keyword": "payroll management deutsch",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/projekt/spezialist_mw_entgeltabrechnung_entgeltabrechnung_payroll_management-122"
+        },
+        {
+          "keyword": "interim projektmanager",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/einsatzgebiete/projektmanagement"
+        },
+        {
+          "keyword": "projektleiter auf zeit",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/einsatzgebiete/projektmanagement"
+        },
+        {
+          "keyword": "interim management plattform",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/fuer-interim-manager"
+        },
+        {
+          "keyword": "interim plattform",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/fuer-interim-manager"
+        },
+        {
+          "keyword": "angebote interimsmanagement",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/projekte"
+        },
+        {
+          "keyword": "interim management projektmanagement",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/einsatzgebiete/projektmanagement"
+        },
+        {
+          "keyword": "projektleiter interim",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/einsatzgebiete/projektmanagement"
+        },
+        {
+          "keyword": "interim management platform",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "wie finde ich einen manager",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/fuer-unternehmen"
+        },
+        {
+          "keyword": "interim online",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/"
+        },
+        {
+          "keyword": "cfo ad interim",
+          "position": 2,
+          "url": "https://www.interim-x.com/de/news/neudefinition-von-fuehrung-der-cfo-ad-interim"
+        }
+      ],
+      "kwcount": 345
+    }
+  ],
+  "search_volumes": {
+    "data science recruitment": 10,
+    "headhunter digitalisierung": 10,
+    "headhunter einkauf": 100,
+    "headhunter fashion": 60,
+    "headhunter hamburg marketing": 10,
+    "headhunter it k\u00f6ln": 20,
+    "headhunter marketing": 100,
+    "headhunter marketing m\u00fcnchen": 10,
+    "ad interim position": 10,
+    "ex interim": 10,
+    "interim hr director": 10,
+    "interim manager finden": 20,
+    "interim manager digitalisierung": 20,
+    "interim medizin": 10,
+    "interimsmanager hr": 10,
+    "hr interim management berlin": 10,
+    "interim ceo roles": 10,
+    "interim cto": 80,
+    "interim logistik": 30
+  }
+}

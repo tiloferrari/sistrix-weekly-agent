@@ -135,7 +135,9 @@ python -m pytest tests/ -q
 
 ## Beispiel-Bericht (Live-Daten)
 
-Ein mit echten Sistrix-Live-Daten (16.11.2026) erzeugter PDF-Bericht liegt im Repo: [`docs/sample-report-live-2026-11-16.pdf`](docs/sample-report-live-2026-11-16.pdf) – 3 Seiten mit Top-3-Wettbewerbern, Begründung und Top-5-Keyword-Tabellen.
+Mit echten Sistrix-Live-Daten erzeugte PDF-Berichte liegen im Repo:
+- [`docs/sample-report-live-2026-11-23.pdf`](docs/sample-report-live-2026-11-23.pdf) – 3 Seiten, inkl. Suchvolumen-Spalte (ab 23.11. aus dem `traffic`-Feld der Keyword-Zeilen); zugehöriger Capture: [`data/live_capture_2026-11-23.json`](data/live_capture_2026-11-23.json)
+- [`docs/sample-report-live-2026-11-16.pdf`](docs/sample-report-live-2026-11-16.pdf) – älterer Stand (16.11.2026)
 
 ## Ergebnis des Probelaufs (16.11.2026)
 
